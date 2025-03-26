@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Arcana Veil</title>
+  <title>The Folded Path</title>
   <link rel="stylesheet" href="index.css" />
 </head>
 <body>
@@ -44,21 +44,29 @@
         </p>
       </section>
 
-      <section class="section card">
-        <h2>Join the Cult</h2>
-        <form class="cult-form">
-          <label for="name">Name or Chosen Arcana:</label>
-          <input type="text" id="name" name="name" required />
-          <label for="email">Prophetic Email:</label>
-          <input type="email" id="email" name="email" required />
-          <label for="card">Your Favorite Card:</label>
-          <select id="card" name="card">
-            <option value="fool">The Fool</option>
-            <!-- more cards -->
-          </select>
-          <button type="submit">Submit to Fate</button>
-        </form>
-      </section>
+<section class="section card">
+  <h2>Join the Folded Truth</h2>
+  <form class="cult-form" action="https://formspree.io/f/xrbplajv" method="POST">
+    <label for="name">Name or Chosen Arcana:</label>
+    <input type="text" id="name" name="name" required />
+
+    <label for="email">Prophetic Email:</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="card">Your Favorite Card:</label>
+    <select id="card" name="card">
+      <option value="fool">The Fool</option>
+      <option value="magician">The Magician</option>
+      <option value="high-priestess">The High Priestess</option>
+      <option value="death">Death</option>
+      <option value="tower">The Tower</option>
+      <option value="world">The World</option>
+    </select>
+
+    <button type="submit">Submit to Fate</button>
+  </form>
+</section>
+
 
       <footer>
         <p>&copy; 2025 The Arcana Veil | Walk the Path. Reveal the Pattern.</p>
