@@ -3,93 +3,551 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tarot Quiz | The Arcana Veil</title>
-  <link rel="stylesheet" href="quiz.css" />
+  <title>Tarot Mastery Quiz</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #e6e6e6;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .quiz-container {
+      background: rgba(20, 20, 20, 0.95);
+      border-left: 4px solid #d4af37;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    h1 {
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .choices button {
+      padding: 0.75rem;
+      background-color: #222;
+      color: #e6e6e6;
+      border: 1px solid #555;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .choices button:hover {
+      background-color: #333;
+    }
+
+    .choices button.correct {
+      background-color: #2d612d;
+      border-color: #3ad13a;
+    }
+
+    .choices button.incorrect {
+      background-color: #612d2d;
+      border-color: #d13a3a;
+    }
+
+    #feedback {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    #next-btn {
+      display: none;
+      margin-top: 2rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #d4af37;
+      color: #111;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div class="backdrop">
-    <div class="overlay">
-      <nav class="top-nav">
-        <a href="index.html">Home</a>
-        <a href="quiz.html" class="active">Tarot Quiz</a>
-      </nav>
-
-      <header>
-        <h1>Tarot Knowledge Quiz</h1>
-        <p class="subtitle">Prove your worth, initiate.</p>
-      </header>
-
-      <form id="quiz-form">
-        <div class="question">
-          <p>1. Which card represents transformation and rebirth?</p>
-          <label><input type="radio" name="q1" value="death" /> Death</label>
-          <label><input type="radio" name="q1" value="tower" /> The Tower</label>
-          <label><input type="radio" name="q1" value="justice" /> Justice</label>
-        </div>
-
-        <div class="question">
-          <p>2. Which card symbolizes inner wisdom and solitude?</p>
-          <label><input type="radio" name="q2" value="hermit" /> The Hermit</label>
-          <label><input type="radio" name="q2" value="priestess" /> The High Priestess</label>
-          <label><input type="radio" name="q2" value="hanged" /> The Hanged Man</label>
-        </div>
-
-        <div class="question">
-          <p>3. Which card is associated with sudden change or upheaval?</p>
-          <label><input type="radio" name="q3" value="tower" /> The Tower</label>
-          <label><input type="radio" name="q3" value="devil" /> The Devil</label>
-          <label><input type="radio" name="q3" value="moon" /> The Moon</label>
-        </div>
-
-        <div class="question">
-          <p>4. What does The Fool represent?</p>
-          <label><input type="radio" name="q4" value="innocence" /> New beginnings & innocence</label>
-          <label><input type="radio" name="q4" value="deception" /> Deception and risk</label>
-          <label><input type="radio" name="q4" value="karma" /> Karma and justice</label>
-        </div>
-
-        <div class="question">
-          <p>5. Which card is about balance and cause & effect?</p>
-          <label><input type="radio" name="q5" value="justice" /> Justice</label>
-          <label><input type="radio" name="q5" value="temperance" /> Temperance</label>
-          <label><input type="radio" name="q5" value="judgement" /> Judgement</label>
-        </div>
-
-        <button type="submit">Reveal My Fate</button>
-        <div id="result"></div>
-      </form>
+  <div class="quiz-container">
+    <h1>Tarot Mastery Quiz</h1>
+    <div id="quiz">
+      <p class="question" id="question-text"></p>
+      <div class="choices" id="choices"></div>
+      <p id="feedback"></p>
+      <button id="next-btn">Next →</button>
     </div>
   </div>
-
   <script>
-    document.getElementById('quiz-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+const questions = [
+  {
+    "question": "What is the core meaning of The Fool?",
+    "answer": "New beginnings",
+    "choices": ["Anxiety", "New beginnings", "Fulfillment"]
+  },
+  {
+    "question": "What is the core meaning of The Magician?",
+    "answer": "Manifestation",
+    "choices": ["Decisions", "Change", "Manifestation"]
+  },
+  {
+    "question": "What is the core meaning of The High Priestess?",
+    "answer": "Intuition",
+    "choices": ["Struggles", "Community", "Intuition"]
+  },
+  {
+    "question": "What is the core meaning of The Empress?",
+    "answer": "Fertility",
+    "choices": ["Fertility", "Positivity", "Action"]
+  },
+  {
+    "question": "What is the core meaning of The Emperor?",
+    "answer": "Authority",
+    "choices": ["Manifestation", "Authority", "Community"]
+  },
+  {
+    "question": "What is the core meaning of The Hierophant?",
+    "answer": "Tradition",
+    "choices": ["Justice", "Tradition", "Community"]
+  },
+  {
+    "question": "What is the core meaning of The Lovers?",
+    "answer": "Love",
+    "choices": ["Betrayal", "Passion", "Love"]
+  },
+  {
+    "question": "What is the core meaning of The Chariot?",
+    "answer": "Control",
+    "choices": ["Courage", "Control", "Intellect"]
+  },
+  {
+    "question": "What is the core meaning of Strength?",
+    "answer": "Courage",
+    "choices": ["Balance", "Courage", "Fertility"]
+  },
+  {
+    "question": "What is the core meaning of The Hermit?",
+    "answer": "Introspection",
+    "choices": ["Introspection", "Illusion", "Conflict"]
+  },
+  {
+    "question": "What is the core meaning of Wheel of Fortune?",
+    "answer": "Change",
+    "choices": ["Change", "Transformation", "Control"]
+  },
+  {
+    "question": "What is the core meaning of Justice?",
+    "answer": "Fairness",
+    "choices": ["Introspection", "Finality", "Fairness"]
+  },
+  {
+    "question": "What is the core meaning of The Hanged Man?",
+    "answer": "Pause",
+    "choices": ["Completion", "Pause", "Responsibility"]
+  },
+  {
+    "question": "What is the core meaning of Death?",
+    "answer": "Transformation",
+    "choices": ["Transformation", "New beginnings", "Pause"]
+  },
+  {
+    "question": "What is the core meaning of Temperance?",
+    "answer": "Balance",
+    "choices": ["Loss", "Inspiration", "Balance"]
+  },
+  {
+    "question": "What is the core meaning of The Devil?",
+    "answer": "Addiction",
+    "choices": ["Burden", "Addiction", "Truth"]
+  },
+  {
+    "question": "What is the core meaning of The Tower?",
+    "answer": "Sudden change",
+    "choices": ["Sudden change", "Change", "Responsibility"]
+  },
+  {
+    "question": "What is the core meaning of The Star?",
+    "answer": "Hope",
+    "choices": ["Hope", "Love", "Passion"]
+  },
+  {
+    "question": "What is the core meaning of The Moon?",
+    "answer": "Illusion",
+    "choices": ["Illusion", "Truth", "Courage"]
+  },
+  {
+    "question": "What is the core meaning of The Sun?",
+    "answer": "Positivity",
+    "choices": ["Positivity", "Inspiration", "New beginnings"]
+  },
+  {
+    "question": "What is the core meaning of Judgement?",
+    "answer": "Reflection",
+    "choices": ["Reflection", "Discipline", "Love"]
+  },
+  {
+    "question": "What is the core meaning of The World?",
+    "answer": "Completion",
+    "choices": ["Completion", "Balance", "Creativity"]
+  },
+  {
+    "question": "What is the core meaning of Ace of Cups?",
+    "answer": "Emotions",
+    "choices": ["Emotions", "Work", "Control"]
+  },
+  {
+    "question": "What is the core meaning of 2 of Cups?",
+    "answer": "Love",
+    "choices": ["Love", "Discipline", "Truth"]
+  },
+  {
+    "question": "What is the core meaning of 3 of Cups?",
+    "answer": "Connection",
+    "choices": ["Connection", "Finality", "Responsibility"]
+  },
+  {
+    "question": "What is the core meaning of 4 of Cups?",
+    "answer": "Intuition",
+    "choices": ["Justice", "Intuition", "Inspiration"]
+  },
+  {
+    "question": "What is the core meaning of 5 of Cups?",
+    "answer": "Loss",
+    "choices": ["Loss", "Fertility", "Travel"]
+  },
+  {
+    "question": "What is the core meaning of 6 of Cups?",
+    "answer": "Community",
+    "choices": ["Community", "Action", "Victory"]
+  },
+  {
+    "question": "What is the core meaning of 7 of Cups?",
+    "answer": "Happiness",
+    "choices": ["Happiness", "Truth", "Legacy"]
+  },
+  {
+    "question": "What is the core meaning of 8 of Cups?",
+    "answer": "Relationships",
+    "choices": ["Relationships", "Inspiration", "Pause"]
+  },
+  {
+    "question": "What is the core meaning of 9 of Cups?",
+    "answer": "Fulfillment",
+    "choices": ["Fulfillment", "Creativity", "Illusion"]
+  },
+  {
+    "question": "What is the core meaning of 10 of Cups?",
+    "answer": "Sharing",
+    "choices": ["Sharing", "Control", "Judgement"]
+  },
+  {
+    "question": "What is the core meaning of Page of Cups?",
+    "answer": "Love",
+    "choices": ["Love", "Materialism", "New beginnings"]
+  },
+  {
+    "question": "What is the core meaning of Knight of Cups?",
+    "answer": "Happiness",
+    "choices": ["Happiness", "Fertility", "Struggles"]
+  },
+  {
+    "question": "What is the core meaning of Queen of Cups?",
+    "answer": "Emotions",
+    "choices": ["Emotions", "Hope", "Work"]
+  },
+  {
+    "question": "What is the core meaning of King of Cups?",
+    "answer": "Intuition",
+    "choices": ["Intuition", "Intellect", "Courage"]
+  },
+  {
+    "question": "What is the core meaning of Ace of Wands?",
+    "answer": "Creativity",
+    "choices": ["Creativity", "Truth", "Loss"]
+  },
+  {
+    "question": "What is the core meaning of 2 of Wands?",
+    "answer": "Passion",
+    "choices": ["Passion", "Justice", "Introspection"]
+  },
+  {
+    "question": "What is the core meaning of 3 of Wands?",
+    "answer": "Inspiration",
+    "choices": ["Inspiration", "Fertility", "Structure"]
+  },
+  {
+    "question": "What is the core meaning of 4 of Wands?",
+    "answer": "Ambition",
+    "choices": ["Ambition", "Hope", "Betrayal"]
+  },
+  {
+    "question": "What is the core meaning of 5 of Wands?",
+    "answer": "Exploration",
+    "choices": ["Exploration", "Finality", "Love"]
+  },
+  {
+    "question": "What is the core meaning of 6 of Wands?",
+    "answer": "Action",
+    "choices": ["Action", "Tradition", "Materialism"]
+  },
+  {
+    "question": "What is the core meaning of 7 of Wands?",
+    "answer": "Courage",
+    "choices": ["Courage", "Community", "Hope"]
+  },
+  {
+    "question": "What is the core meaning of 8 of Wands?",
+    "answer": "Perseverance",
+    "choices": ["Perseverance", "Balance", "Manifestation"]
+  },
+  {
+    "question": "What is the core meaning of 9 of Wands?",
+    "answer": "Resilience",
+    "choices": ["Resilience", "Justice", "Deception"]
+  },
+  {
+    "question": "What is the core meaning of 10 of Wands?",
+    "answer": "Burden",
+    "choices": ["Burden", "Love", "Celebration"]
+  },
+  {
+    "question": "What is the core meaning of Page of Wands?",
+    "answer": "Passion",
+    "choices": ["Passion", "Conflict", "Karma"]
+  },
+  {
+    "question": "What is the core meaning of Knight of Wands?",
+    "answer": "Exploration",
+    "choices": ["Exploration", "Harmony", "Truth"]
+  },
+  {
+    "question": "What is the core meaning of Queen of Wands?",
+    "answer": "Inspiration",
+    "choices": ["Inspiration", "Judgement", "Finality"]
+  },
+  {
+    "question": "What is the core meaning of King of Wands?",
+    "answer": "Ambition",
+    "choices": ["Ambition", "Celebration", "Completion"]
+  },
+  {
+    "question": "What is the core meaning of Ace of Swords?",
+    "answer": "Intellect",
+    "choices": ["Intellect", "Creativity", "Fear"]
+  },
+  {
+    "question": "What is the core meaning of 2 of Swords?",
+    "answer": "Truth",
+    "choices": ["Truth", "Judgement", "Faith"]
+  },
+  {
+    "question": "What is the core meaning of 3 of Swords?",
+    "answer": "Conflict",
+    "choices": ["Conflict", "Hope", "Patience"]
+  },
+  {
+    "question": "What is the core meaning of 4 of Swords?",
+    "answer": "Decisions",
+    "choices": ["Decisions", "Change", "Emotions"]
+  },
+  {
+    "question": "What is the core meaning of 5 of Swords?",
+    "answer": "Struggles",
+    "choices": ["Struggles", "Fulfillment", "Karma"]
+  },
+  {
+    "question": "What is the core meaning of 6 of Swords?",
+    "answer": "Betrayal",
+    "choices": ["Betrayal", "Fertility", "Perseverance"]
+  },
+  {
+    "question": "What is the core meaning of 7 of Swords?",
+    "answer": "Justice",
+    "choices": ["Justice", "Hope", "Courage"]
+  },
+  {
+    "question": "What is the core meaning of 8 of Swords?",
+    "answer": "Anxiety",
+    "choices": ["Anxiety", "Structure", "Creativity"]
+  },
+  {
+    "question": "What is the core meaning of 9 of Swords?",
+    "answer": "Loss",
+    "choices": ["Loss", "Hope", "Connection"]
+  },
+  {
+    "question": "What is the core meaning of 10 of Swords?",
+    "answer": "Finality",
+    "choices": ["Finality", "Tradition", "Balance"]
+  },
+  {
+    "question": "What is the core meaning of Page of Swords?",
+    "answer": "Truth",
+    "choices": ["Truth", "Illusion", "Deception"]
+  },
+  {
+    "question": "What is the core meaning of Knight of Swords?",
+    "answer": "Conflict",
+    "choices": ["Conflict", "Faith", "New beginnings"]
+  },
+  {
+    "question": "What is the core meaning of Queen of Swords?",
+    "answer": "Intellect",
+    "choices": ["Intellect", "Structure", "Karma"]
+  },
+  {
+    "question": "What is the core meaning of King of Swords?",
+    "answer": "Decisions",
+    "choices": ["Decisions", "Resilience", "Tradition"]
+  },
+  {
+    "question": "What is the core meaning of Ace of Pentacles?",
+    "answer": "Wealth",
+    "choices": ["Wealth", "Illusion", "Creativity"]
+  },
+  {
+    "question": "What is the core meaning of 2 of Pentacles?",
+    "answer": "Work",
+    "choices": ["Work", "Transformation", "Hope"]
+  },
+  {
+    "question": "What is the core meaning of 3 of Pentacles?",
+    "answer": "Stability",
+    "choices": ["Stability", "Burden", "Joy"]
+  },
+  {
+    "question": "What is the core meaning of 4 of Pentacles?",
+    "answer": "Materialism",
+    "choices": ["Materialism", "Love", "Solitude"]
+  },
+  {
+    "question": "What is the core meaning of 5 of Pentacles?",
+    "answer": "Generosity",
+    "choices": ["Generosity", "Illusion", "Connection"]
+  },
+  {
+    "question": "What is the core meaning of 6 of Pentacles?",
+    "answer": "Success",
+    "choices": ["Success", "Illusion", "Truth"]
+  },
+  {
+    "question": "What is the core meaning of 7 of Pentacles?",
+    "answer": "Balance",
+    "choices": ["Balance", "Passion", "Inspiration"]
+  },
+  {
+    "question": "What is the core meaning of 8 of Pentacles?",
+    "answer": "Discipline",
+    "choices": ["Discipline", "Wisdom", "Hope"]
+  },
+  {
+    "question": "What is the core meaning of 9 of Pentacles?",
+    "answer": "Responsibility",
+    "choices": ["Responsibility", "Joy", "Fear"]
+  },
+  {
+    "question": "What is the core meaning of 10 of Pentacles?",
+    "answer": "Legacy",
+    "choices": ["Legacy", "Balance", "Illusion"]
+  },
+  {
+    "question": "What is the core meaning of Page of Pentacles?",
+    "answer": "Stability",
+    "choices": ["Stability", "Hope", "Transformation"]
+  },
+  {
+    "question": "What is the core meaning of Knight of Pentacles?",
+    "answer": "Discipline",
+    "choices": ["Discipline", "Conflict", "Creativity"]
+  },
+  {
+    "question": "What is the core meaning of Queen of Pentacles?",
+    "answer": "Wealth",
+    "choices": ["Wealth", "Truth", "Connection"]
+  },
+  {
+    "question": "What is the core meaning of King of Pentacles?",
+    "answer": "Legacy",
+    "choices": ["Legacy", "Love", "Judgement"]
+  }
+];
+let currentQuestionIndex = 0;
+const questionText = document.getElementById('question-text');
+const choicesContainer = document.getElementById('choices');
+const feedback = document.getElementById('feedback');
+const nextBtn = document.getElementById('next-btn');
 
-      const answers = {
-        q1: 'death',
-        q2: 'hermit',
-        q3: 'tower',
-        q4: 'innocence',
-        q5: 'justice'
-      };
+function shuffle(array) {
+  return [...array].sort(() => Math.random() - 0.5);
+}
 
-      let score = 0;
-      for (let key in answers) {
-        const selected = document.querySelector(`input[name="${key}"]:checked`);
-        if (selected && selected.value === answers[key]) {
-          score++;
-        }
-      }
+function loadQuestion() {
+  const current = questions[currentQuestionIndex];
+  questionText.textContent = current.question;
+  choicesContainer.innerHTML = '';
+  feedback.textContent = '';
+  nextBtn.style.display = 'none';
 
-      const result = document.getElementById('result');
-      if (score === 5) {
-        result.textContent = `🃏 Perfect score! You are truly one with the Arcana.`;
-      } else if (score >= 3) {
-        result.textContent = `✨ You got ${score}/5. The cards whisper, but you must listen closer.`;
-      } else {
-        result.textContent = `☠️ You got ${score}/5. The path is dark. Study harder, initiate.`;
-      }
-    });
-  </script>
+  shuffle(current.choices).forEach(choice => {
+    const btn = document.createElement('button');
+    btn.textContent = choice;
+    btn.addEventListener('click', () => handleAnswer(btn, current.answer));
+    choicesContainer.appendChild(btn);
+  });
+}
+
+function handleAnswer(button, correctAnswer) {
+  const allButtons = document.querySelectorAll('.choices button');
+  allButtons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correctAnswer) {
+      btn.classList.add('correct');
+    } else {
+      btn.classList.add('incorrect');
+    }
+  });
+
+  if (button.textContent === correctAnswer) {
+    feedback.textContent = "✅ Correct!";
+    feedback.style.color = "#3ad13a";
+    nextBtn.style.display = "inline-block";
+  } else {
+    feedback.textContent = "❌ Wrong. Try again next time.";
+    feedback.style.color = "#d13a3a";
+  }
+}
+
+nextBtn.addEventListener('click', () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    loadQuestion();
+  } else {
+    document.getElementById('quiz').innerHTML = `
+      <h2>🎉 You've completed the Tarot Mastery Quiz!</h2>
+      <p>You answered all ${questions.length} questions. The Arcana are pleased.</p>
+    `;
+  }
+});
+
+loadQuestion();
+</script>
 </body>
 </html>
