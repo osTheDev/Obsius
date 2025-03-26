@@ -528,11 +528,12 @@ function handleAnswer(button, correctAnswer) {
   if (button.textContent === correctAnswer) {
     feedback.textContent = "✅ Correct!";
     feedback.style.color = "#3ad13a";
-    nextBtn.style.display = "inline-block";
   } else {
-    feedback.textContent = "❌ Wrong. Try again next time.";
+    feedback.textContent = "❌ Wrong.";
     feedback.style.color = "#d13a3a";
   }
+
+  nextBtn.style.display = "inline-block";
 }
 
 nextBtn.addEventListener('click', () => {
@@ -542,10 +543,13 @@ nextBtn.addEventListener('click', () => {
   } else {
     document.getElementById('quiz').innerHTML = `
       <h2>🎉 You've completed the Tarot Mastery Quiz!</h2>
-      <p>You answered all ${questions.length} questions. The Arcana are pleased.</p>
+      <p>You faced all ${questions.length} cards. The Arcana are amused.</p>
     `;
   }
 });
+
+loadQuestion();
+
 
 loadQuestion();
 </script>
