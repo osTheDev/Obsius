@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tarot Quiz | The Arcana Veil</title>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<body>
+  <div class="backdrop">
+    <div class="overlay">
+      <nav class="top-nav">
+        <a href="index.html">Home</a>
+        <a href="quiz.html" class="active">Tarot Quiz</a>
+      </nav>
+
+      <header>
+        <h1>Tarot Knowledge Quiz</h1>
+        <p class="subtitle">Prove your worth, initiate.</p>
+      </header>
+
+      <form id="quiz-form">
+        <div class="question">
+          <p>1. Which card represents transformation and rebirth?</p>
+          <label><input type="radio" name="q1" value="death" /> Death</label>
+          <label><input type="radio" name="q1" value="tower" /> The Tower</label>
+          <label><input type="radio" name="q1" value="justice" /> Justice</label>
+        </div>
+
+        <div class="question">
+          <p>2. Which card symbolizes inner wisdom and solitude?</p>
+          <label><input type="radio" name="q2" value="hermit" /> The Hermit</label>
+          <label><input type="radio" name="q2" value="priestess" /> The High Priestess</label>
+          <label><input type="radio" name="q2" value="hanged" /> The Hanged Man</label>
+        </div>
+
+        <div class="question">
+          <p>3. Which card is associated with sudden change or upheaval?</p>
+          <label><input type="radio" name="q3" value="tower" /> The Tower</label>
+          <label><input type="radio" name="q3" value="devil" /> The Devil</label>
+          <label><input type="radio" name="q3" value="moon" /> The Moon</label>
+        </div>
+
+        <div class="question">
+          <p>4. What does The Fool represent?</p>
+          <label><input type="radio" name="q4" value="innocence" /> New beginnings & innocence</label>
+          <label><input type="radio" name="q4" value="deception" /> Deception and risk</label>
+          <label><input type="radio" name="q4" value="karma" /> Karma and justice</label>
+        </div>
+
+        <div class="question">
+          <p>5. Which card is about balance and cause & effect?</p>
+          <label><input type="radio" name="q5" value="justice" /> Justice</label>
+          <label><input type="radio" name="q5" value="temperance" /> Temperance</label>
+          <label><input type="radio" name="q5" value="judgement" /> Judgement</label>
+        </div>
+
+        <button type="submit">Reveal My Fate</button>
+        <div id="result"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const answers = {
+        q1: 'death',
+        q2: 'hermit',
+        q3: 'tower',
+        q4: 'innocence',
+        q5: 'justice'
+      };
+
+      let score = 0;
+      for (let key in answers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key]) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById('result');
+      if (score === 5) {
+        result.textContent = `🃏 Perfect score! You are truly one with the Arcana.`;
+      } else if (score >= 3) {
+        result.textContent = `✨ You got ${score}/5. The cards whisper, but you must listen closer.`;
+      } else {
+        result.textContent = `☠️ You got ${score}/5. The path is dark. Study harder, initiate.`;
+      }
+    });
+  </script>
+</body>
+</html>
