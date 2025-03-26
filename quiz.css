@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Georgia', serif;
+  color: #e6e6e6;
+  background-color: #000;
+}
+
+.backdrop {
+  background-image: url('images/backdrop.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.85);
+  min-height: 100%;
+  padding: 3rem 2rem;
+  overflow-y: auto;
+}
+
+.top-nav {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.top-nav a {
+  color: #d4af37;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.top-nav a:hover,
+.top-nav .active {
+  color: #fff3a0;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-family: 'UnifrakturCook', cursive;
+  font-size: 3rem;
+  color: #d4af37;
+}
+
+.subtitle {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+form {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: rgba(24, 24, 24, 0.85);
+  padding: 2rem;
+  border-left: 4px solid #d4af37;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.question {
+  margin-bottom: 2rem;
+}
+
+.question p {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+label {
+  display: block;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+button {
+  background-color: #d4af37;
+  color: #111;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin: 1rem auto;
+}
+
+button:hover {
+  background-color: #fff3a0;
+}
+
+#result {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d4af37;
+}
